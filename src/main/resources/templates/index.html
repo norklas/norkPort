@@ -1,0 +1,14 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+ <head>
+  <meta charset="ISO-8859-1">
+  <link href="main.css" rel="stylesheet">
+  <title>Spring Boot Application</title>
+ </head>
+ <body>
+ <nav hx-get="/navbar" hx-trigger="load" hx-target="#navbar" hx-swap="innerHTML" class="flex flex-col items-center justify-center w-full">
+  <div th:insert="~{navbar :: #navbar}" class="flex items-center justify-center flex-grow"></div>
+ </nav>
+  <h4>Welcome to Thymeleaf Spring Boot web application</h4>
+ </body>
+</html>

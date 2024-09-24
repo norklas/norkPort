@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BlogPostRepository extends JpaRepository<BlogPost, Long> {
     List<BlogPost> findByTitle(String title);
+    List<BlogPost> findByTitleContainingIgnoreCase(String title);
 }

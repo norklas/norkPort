@@ -1,8 +1,5 @@
 package org.norklas.norkport;
 
-import io.jstach.jstache.JStache;
-
-@JStache(path = "index")
 public class NameModel {
     private String name;
 

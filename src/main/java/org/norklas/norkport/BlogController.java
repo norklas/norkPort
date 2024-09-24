@@ -5,9 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 // API is built, and works, just need to build out a service and refactor to use jstachio
 @CrossOrigin(origins = "http://localhost:8080")
@@ -21,12 +19,12 @@ public class BlogController {
     @GetMapping("/posts")
     public ResponseEntity<List<BlogPost>> getAllPosts(@RequestParam(required = false) String title) {
         try {
-            List<BlogPost> posts = new ArrayList<BlogPost>();
+            List<BlogPost> posts;
 
             if (title == null) {
-                posts.addAll(blogPostRepository.findAll());
+                posts = blogPostRepository.findAll();
             } else {
-                posts.addAll(blogPostRepository.findByTitle(title));
+                posts = blogPostRepository.findByTitleContainingIgnoreCase(title);
             }
 
             if (posts.isEmpty()) {

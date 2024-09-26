@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Blog</title>
+  <link th:href="@{/main.css}" rel="stylesheet">
+</head>
+<body>
+<nav hx-get="/navbar" hx-trigger="load" hx-target="#navbar" hx-swap="innerHTML" class="flex flex-col items-center justify-center w-full">
+  <div th:insert="~{navbar :: #navbar}" class="flex items-center justify-center flex-grow"></div>
+</nav>
+<h1>Blog Posts</h1>
+<div th:each="post : ${posts}">
+  <h2 th:text="${post.title}"></h2>
+  <p th:text="${post.content}"></p>
+</div>
+</body>
+</html>

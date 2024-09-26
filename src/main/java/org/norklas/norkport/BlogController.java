@@ -3,37 +3,39 @@ package org.norklas.norkport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 // API is built, and works, just need to build out a service and refactor to use jstachio
 @CrossOrigin(origins = "http://localhost:8080")
-@RestController
+@Controller
 @RequestMapping("/blog")
 public class BlogController {
 
     @Autowired
     BlogPostRepository blogPostRepository;
 
+
     @GetMapping("/posts")
-    public ResponseEntity<List<BlogPost>> getAllPosts(@RequestParam(required = false) String title) {
+    public String showPosts(Model model, @RequestParam(required = false) String title) {
+        List<BlogPost> posts = getAllPosts(title);
+        model.addAttribute("posts", posts);
+        return "blog"; // This should match your template name
+    }
+
+    private List<BlogPost> getAllPosts(String title) {
         try {
-            List<BlogPost> posts;
-
-            if (title == null) {
-                posts = blogPostRepository.findAll();
+            if (title == null || title.isEmpty()) {
+                return blogPostRepository.findAll();
             } else {
-                posts = blogPostRepository.findByTitleContainingIgnoreCase(title);
+                return blogPostRepository.findByTitleContainingIgnoreCase(title);
             }
-
-            if (posts.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(posts, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            // Log the exception (optional)
+            return new ArrayList<>(); // Return an empty list in case of error
         }
     }
 

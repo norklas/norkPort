@@ -1,9 +1,6 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
- <head>
-  <meta charset="ISO-8859-1">
-  <link th:href="@{main.css}" rel="stylesheet">
-  <title>Spring Boot Application</title>
+ <head th:replace="~{header :: #header}">
  </head>
  <body>
  <nav hx-get="/navbar" hx-trigger="load" hx-target="#navbar" hx-swap="innerHTML" class="flex flex-col items-center justify-center w-full">

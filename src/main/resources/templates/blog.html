@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-  <title>Blog</title>
-  <link th:href="@{/main.css}" rel="stylesheet">
+<head th:insert="~{header :: #header}">
 </head>
 <body>
 <nav hx-get="/navbar" hx-trigger="load" hx-target="#navbar" hx-swap="innerHTML" class="flex flex-col items-center justify-center w-full">
@@ -11,7 +9,8 @@
 <h1>Blog Posts</h1>
 <div th:each="post : ${posts}">
   <h2 th:text="${post.title}"></h2>
-  <p th:text="${post.content}"></p>
+  <p th:utext="${post.content}"></p>
 </div>
+<button id="open-page" hx-get="/blog/posts/new" hx-target="body" hx-swap="innerHTML" hx-push-url="/blog/posts/new">New Post</button>
 </body>
 </html>

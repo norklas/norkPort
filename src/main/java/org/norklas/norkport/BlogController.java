@@ -11,7 +11,7 @@ import java.util.*;
 
 // API is built, and works, just need to build out a service and refactor to use jstachio
 @CrossOrigin(origins = "http://localhost:8080")
-@Controller
+@RestController
 @RequestMapping("/blog")
 public class BlogController {
 
@@ -19,14 +19,7 @@ public class BlogController {
     BlogPostRepository blogPostRepository;
 
 
-    @GetMapping("/posts")
-    public String showPosts(Model model, @RequestParam(required = false) String title) {
-        List<BlogPost> posts = getAllPosts(title);
-        model.addAttribute("posts", posts);
-        return "blog"; // This should match your template name
-    }
-
-    private List<BlogPost> getAllPosts(String title) {
+    public List<BlogPost> getAllPosts(String title) {
         try {
             if (title == null || title.isEmpty()) {
                 return blogPostRepository.findAll();
@@ -50,14 +43,15 @@ public class BlogController {
         }
     }
 
-    @PostMapping("/posts")
-    public ResponseEntity<BlogPost> createPost(@RequestBody BlogPost post) {
-        try {
-            BlogPost _post = blogPostRepository.save(new BlogPost(post.getTitle(), post.getContent()));
-            return new ResponseEntity<>(_post, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
+    @PostMapping("/posts/new")
+    public ResponseEntity<BlogPost> createPost(@RequestParam String title, @RequestParam String content) {
+        BlogPost post = new BlogPost();
+        post.setTitle(title);
+        post.setContent(content);
+        BlogPost savedPost = blogPostRepository.save(post);
+
+        return new ResponseEntity<>(savedPost, HttpStatus.CREATED);
     }
 
     @PutMapping("/posts/{id}")

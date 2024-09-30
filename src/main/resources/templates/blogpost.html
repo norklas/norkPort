@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="~{header :: #header}">
+</head>
+<body>
+<form hx-post="/blog/posts/new" hx-swap="innerHTML" hx-trigger="submit" hx-headers='{"Content-Type": "application/json"}'>
+    <div>
+        <label for="title">
+        <input type="text" id="title" name="title" placeholder="Title" required>
+        </label>
+    </div>
+    <div>
+        <label for="content">
+        <textarea id="content" name="content"></textarea>
+        </label>
+    </div>
+    <button type="submit">Post</button>
+</form>
+</body>
+</html>
